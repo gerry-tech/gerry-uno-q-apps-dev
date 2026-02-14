@@ -22,7 +22,7 @@ const APPS = [
   {
     title: "Ping Test",
     desc: "Esempio base per testare connessione e latenza via web.",
-    zip: "apps/PingTest.zip",
+    zip: "https://github.com/gerry-tech/gerry-uno-q-apps-dev/raw/refs/heads/main/apps/reaction-time-test/ReactionTimeTest.zip",
     tags: ["web", "network"],
     preview: "apps/display-a-7-segmenti/preview.jpeg",
     new: true         // solo NEW
