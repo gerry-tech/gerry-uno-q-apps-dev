@@ -7,23 +7,42 @@
 
   <meta name="description" content="Download apps gratuite per Arduino UNO Q. ZIP pronti da importare in Arduino App Lab. Web UI, Servo, Matrix e progetti community." />
 
-  <!-- Cache-buster: alza il numero quando cambi CSS -->
-  <link rel="stylesheet" href="style.css?v=1" />
-
-  <!-- Evita 404 favicon -->
+  <link rel="stylesheet" href="style.css?v=11" />
   <link rel="icon" href="data:,">
 </head>
 
 <body>
-  <header class="wrap">
-    <h1>UNO Q Apps Library</h1>
-    <p class="sub">
-      Download apps gratuite per Arduino UNO Q. ZIP pronti da importare in Arduino App Lab.
-      Web apps, controlli servo, matrix LED e progetti della community.
-    </p>
+  <!-- FX layers -->
+  <div class="fx fx-pcb" aria-hidden="true"></div>
+  <div class="fx fx-scan" aria-hidden="true"></div>
+  <div class="fx fx-noise" aria-hidden="true"></div>
 
-    <div class="notice">
-      <strong>Nota:</strong> progetto community non affiliato ad Arduino.
+  <header class="wrap hero">
+    <div class="hero-top">
+      <div class="hero-title">
+        <div class="kicker">Arduino UNO Q • Community Hub</div>
+        <h1>UNO Q Apps Library</h1>
+        <p class="sub">
+          Download apps gratuite per Arduino UNO Q. ZIP pronti da importare in Arduino App Lab.
+          Web apps, controlli servo, matrix LED e progetti della community.
+        </p>
+
+        <div class="hero-pills">
+          <span class="pill">ZIP Pronti</span>
+          <span class="pill">Web UI</span>
+          <span class="pill">Matrix</span>
+          <span class="pill">Servo</span>
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <!-- Ping video (appare solo se recente) -->
+        <div id="videoPing" class="video-ping" hidden></div>
+
+        <div class="notice">
+          <strong>Nota:</strong> progetto community non affiliato ad Arduino.
+        </div>
+      </div>
     </div>
 
     <section class="channel">
@@ -49,6 +68,14 @@
   </header>
 
   <main class="wrap">
+    <div class="section-head">
+      <h2 class="section-title">Apps disponibili</h2>
+      <div class="section-right">
+        <span class="status-dot"></span>
+        <span class="tiny">Aggiornato di recente</span>
+      </div>
+    </div>
+
     <div id="grid" class="grid"></div>
 
     <footer class="footer">
@@ -58,9 +85,7 @@
   </main>
 
   <!-- Carica prima lista app, poi script -->
-  <script src="apps/apps.js?v=1"></script>
-  <script src="main.js?v=1"></script>
+  <script src="apps/apps.js?v=11"></script>
+  <script src="main.js?v=11"></script>
 </body>
-  <div id="videoPing"></div>
-  <span class="badge-new">NEW</span>
 </html>
