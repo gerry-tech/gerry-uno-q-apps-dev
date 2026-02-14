@@ -494,3 +494,31 @@ body::after{
     );
   mix-blend-mode: overlay; /* dither senza “macchiare” troppo */
 }
+
+/* Version label (bottom right) */
+.site-version{
+  position: fixed;
+  bottom: 12px;
+  right: 16px;
+  z-index: 9999;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+
+  padding: 5px 10px;
+  border-radius: 999px;
+
+  color: rgba(255,255,255,0.65);
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(6px);
+
+  border: 1px solid rgba(255,255,255,0.15);
+
+  transition: opacity 0.2s ease;
+}
+
+.site-version:hover{
+  opacity: 1;
+  color: white;
+}
