@@ -210,4 +210,28 @@ body::before {
     z-index: -1;
 }
 
+.card:hover {
+   box-shadow: 0 0 20px rgba(120,80,255,0.5);
+   transform: translateY(-5px);
+}
+@keyframes scan {
+  0% {background-position:0 0;}
+  100% {background-position:0 100%;}
+}
+
+body {
+  background-image: linear-gradient(
+    rgba(255,255,255,0.02) 1px,
+    transparent 1px
+  );
+  animation: scan 20s linear infinite;
+}
+.badge-new {
+ background:#00ffcc;
+ color:black;
+ padding:3px 6px;
+ border-radius:4px;
+ font-size:10px;
+}
+
 
