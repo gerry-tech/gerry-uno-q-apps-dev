@@ -199,4 +199,15 @@ a.btn.primary{
 .card{ cursor: pointer; }
 .card a{ cursor: default; } /* opzionale: sui bottoni non serve la mano */
 
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url("assets/pcb-pattern.svg");
+    background-size: cover;
+    opacity: 0.08; /* leggero */
+    pointer-events: none;
+    z-index: -1;
+}
+
 
