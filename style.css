@@ -23,26 +23,27 @@
 
 *{ box-sizing:border-box; }
 
-html{ height: 100%; }
+html, body{ height:100%; }
+
 body{
   margin:0;
-  min-height: 100%;
+  min-height:100%;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
   color: var(--text);
   line-height: 1.4;
 
-  /* Sfumatura blu/violacea */
+  /* Background SUPER smooth (no bande) */
   background:
-    radial-gradient(1200px 600px at 8% 0%, rgba(124,92,255,0.38), transparent 60%),
-    radial-gradient(1000px 520px at 95% 12%, rgba(51,214,255,0.22), transparent 55%),
-    radial-gradient(900px 600px at 50% 115%, rgba(124,92,255,0.18), transparent 62%),
+    radial-gradient(1400px 760px at 10% 0%, rgba(124,92,255,0.38), transparent 62%),
+    radial-gradient(1200px 700px at 92% 8%, rgba(51,214,255,0.22), transparent 60%),
+    radial-gradient(1600px 900px at 50% 140%, rgba(124,92,255,0.12), transparent 72%),
+    linear-gradient(to bottom, rgba(0,0,0,0.08), rgba(0,0,0,0.28)),
     var(--bg);
 
-  /* SCROLL OK */
   overflow-x: hidden;
-  overflow-y: auto;
 }
 
+/* Layout */
 .wrap{ max-width: var(--max); margin: 0 auto; padding: 18px; }
 
 /* Metti contenuto sopra gli FX */
@@ -51,68 +52,65 @@ header, main, footer, .wrap{
   z-index: 2;
 }
 
-/* FX layers (sotto al contenuto, sopra al background) */
-/* FIX: fade degli FX molto morbido (niente stacco visibile) */
+/* =========================
+   FX LAYERS (fix banding)
+   ========================= */
 .fx{
-  -webkit-mask-image: linear-gradient(to bottom,
-    #000 0%,
-    #000 92%,
-    rgba(0,0,0,0.65) 96%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(to bottom,
-    #000 0%,
-    #000 92%,
-    rgba(0,0,0,0.65) 96%,
-    transparent 100%
-  );
+  position: fixed;
+  inset: 0;                 /* niente -80, niente artefatti */
+  pointer-events: none;
+  z-index: 1;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
-
-/* PCB overlay */
+/* PCB overlay: torna visibile + niente seam brutti */
 .fx-pcb{
   background-image: url("assets/pcb-green.svg");
-  background-size: cover;        /* <-- invece di 780px 780px */
-  background-repeat: no-repeat;  /* <-- invece di repeat */
-  background-position: center;
+  background-repeat: repeat;
+  background-size: 720px 720px;   /* se vuoi più fitto: 560px */
+  background-position: 0 0;
   opacity: 0.22;
-  filter: contrast(1.1) saturate(1.2);
+  filter: saturate(1.25) contrast(1.05);
+  mix-blend-mode: screen;         /* verde “glow” bello sul blu */
 }
 
-
-/* Scanlines (no transform, no banda) */
+/* Scanlines: più soft (evita moiré con lo zoom) */
 .fx-scan{
   background-image: linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px);
   background-size: 100% 6px;
-  opacity: 0.35;
+  opacity: 0.30;
   animation: scanPos 28s linear infinite;
 }
 
-
-@keyframes scanPos{
-  0%{ background-position: 0 0; }
-  100%{ background-position: 0 240px; }
-}
-
-/* Noise */
+/* Noise leggero */
 .fx-noise{
   background-image:
-    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.035), transparent 45%),
-    radial-gradient(circle at 80% 10%, rgba(255,255,255,0.028), transparent 55%),
-    radial-gradient(circle at 60% 70%, rgba(255,255,255,0.020), transparent 60%);
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.028), transparent 45%),
+    radial-gradient(circle at 80% 10%, rgba(255,255,255,0.020), transparent 55%),
+    radial-gradient(circle at 60% 70%, rgba(255,255,255,0.016), transparent 60%);
   opacity: 0.35;
 }
 
-/* FIX: fade degli FX in basso senza creare bande visibili */
-.fx{
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 84%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 84%, transparent 100%);
+@keyframes scanPos{
+  0%{ background-position: 0 0; }
+  100%{ background-position: 0 260px; }
 }
 
+/* Vignetta “anti-stacco” (questa uccide la fascia) */
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1; /* stesso layer FX, ma sta SOTTO i div FX perché è ::before */
+  background:
+    radial-gradient(1200px 700px at 50% 0%, rgba(0,0,0,0.00), rgba(0,0,0,0.18) 70%, rgba(0,0,0,0.34) 100%),
+    linear-gradient(to bottom, rgba(0,0,0,0.04), rgba(0,0,0,0.18));
+  transform: translateZ(0);
+}
 
-/* Fade basso (solo per chiudere bene il pattern) */
-
-/* Hero */
+/* ============ HERO ============ */
 .hero{ padding-top: 26px; }
 
 .hero-top{
@@ -468,12 +466,10 @@ a.btn.primary{
               0 0 18px rgba(124,92,255,0.18);
   backdrop-filter: blur(8px);
 
-  /* FIX: evita che l'h3 lo renda trasparente */
   -webkit-text-fill-color: rgba(255,255,255,0.92);
   -webkit-background-clip: initial;
   background-clip: initial;
 }
-
 
 /* Empty */
 .empty{ color: var(--muted); }
@@ -488,32 +484,3 @@ a.btn.primary{
 
 /* Card click -> keep links clickable */
 .card a{ cursor: default; }
-
-/* Fade in basso per evitare righe/artefatti del pattern */
-body::after{
-  content:"";
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 140px;
-  pointer-events: none;
-  z-index: -1;
-  background: linear-gradient(to bottom,
-    rgba(11,16,32,0) 0%,
-    rgba(11,16,32,0.55) 40%,
-    rgba(11,16,32,0.92) 100%
-  );
-}
-
-/* 👇 INCOLLA QUI IL FIX */
-body::before{
-  content:"";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  background:
-    radial-gradient(1200px 700px at 50% 0%, rgba(0,0,0,0.00), rgba(0,0,0,0.18) 70%, rgba(0,0,0,0.35) 100%),
-    linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(0,0,0,0.20));
-}
