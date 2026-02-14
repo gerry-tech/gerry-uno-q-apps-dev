@@ -476,3 +476,21 @@ a.btn.primary{
 
 /* Card click -> keep links clickable */
 .card a{ cursor: default; }
+/* FIX BANDIERE/LINEA: micro-dither sopra al background */
+body::after{
+  content:"";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;              /* sta sopra al bg del body, ma sotto agli .fx (che sono z-index:1) */
+  opacity: 0.065;          /* alza a 0.085 se vuoi ancora più invisibile la riga */
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.010) 0px,
+      rgba(255,255,255,0.010) 1px,
+      rgba(0,0,0,0.000) 2px,
+      rgba(0,0,0,0.000) 4px
+    );
+  mix-blend-mode: overlay; /* dither senza “macchiare” troppo */
+}
