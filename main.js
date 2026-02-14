@@ -17,8 +17,8 @@ function escapeHtml(s) {
  * - mostra per X giorni
  */
 const LATEST_VIDEO = {
-  title: "Titolo video",
-  url: "https://youtube.com/xxxx",
+  title: "MatrixAnimation",
+  url: "https://www.youtube.com/watch?v=jkG8Zr1GLo0",
   date: "2026-02-14", // YYYY-MM-DD
   showForDays: 3
 };
