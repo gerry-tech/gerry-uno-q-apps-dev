@@ -1,42 +1,30 @@
 const APPS = [
   {
-    id: "roulette-servo",
-    title: "Arduino Roulette con Servo",
-    desc: "Premi il pulsante, animazione LED suspense e il servo ruota in base al risultato.",
-    tags: ["SERVO","LED","GAME"],
-    requires: "UNO Q, LED, Servo, Pulsante",
-    zip: "https://raw.githubusercontent.com/gerry-tech/gerry-uno-q-apps/main/apps/roulette-servo/Roulette.zip",
-    preview: "apps/roulette-servo/preview.jpg",
-    badge: "FEATURED"
+    title: "Web UI Servo Controller",
+    desc: "Controlla un servo da pagina web con Arduino UNO Q + Web UI.",
+    zip: "apps/WebUIServo.zip",
+    preview: "assets/previews/webui-servo.jpg",
+    tags: ["web", "servo", "ui"],
+    requires: "Servo + cavetti",
+    badge: "TOP",     // grande in alto a sinistra
+    new: true,        // mini NEW vicino al titolo
+    demo: "https://www.youtube.com/watch?v=O9AB-pAx9fA&t=306s" // opzionale
   },
   {
-    id: "display-a-7-segmenti",
-    title: "Controllo via WEB di un Display a 7 segmenti",
-    desc: "Crea una pagina WEB dove comandiamo il display (UNO Q).",
-    tags: ["WEB","DISPLAY","EASY"],
-    requires: "UNO Q, Display a 7 segmenti (opz) alimentazione esterna",
-    zip: "https://raw.githubusercontent.com/gerry-tech/gerry-uno-q-apps/main/apps/display-a-7-segmenti/Display%20a%207%20segmenti.zip",
-    preview: "apps/display-a-7-segmenti/preview.jpeg",
-    badge: "FEATURED"
+    title: "Matrix Animations Pack",
+    desc: "Set di animazioni pronte per LED matrix (formato uint32_t).",
+    zip: "apps/MatrixPack.zip",
+    preview: "assets/previews/matrix.jpg",
+    tags: ["matrix", "led"],
+    requires: "LED Matrix",
+    badge: "BETA",    // solo badge, niente NEW
   },
   {
-    id: "stickman",
-    title: "Animazione di uno Stickman nella LED Matrix",
-    desc: "Strutta dei Frame per creare un'Animazione",
-    tags: ["MATRIX","LED","EASY"],
-    requires: "UNO Q, Cavo USB-C",
-    zip: "https://github.com/gerry-tech/gerry-uno-q-apps/raw/refs/heads/main/apps/stickman/MatrixAnimation.zip",
-    preview: "apps/stickman/preview.png",
-    badge: "NEW"
-  },
-  {
-    id: "reaction-time-test",
-    title: "Test dei Tempi di Reazione",
-    desc: "Crea una Pagina WEB dove puoi iniziare la prova e scrive dopo quanto tempo reagisci.",
-    tags: ["WEB","LED","GAME"],
-    requires: "UNO Q, Resistori, LED, Fotoresistore",
-    zip: "https://github.com/gerry-tech/gerry-uno-q-apps/raw/refs/heads/main/apps/reaction-time-test/ReactionTimeTest.zip",
-    preview: "apps/reaction-time-test/preview.png",
-    badge: "NEW"
+    title: "Ping Test",
+    desc: "Esempio base per testare connessione e latenza via web.",
+    zip: "apps/PingTest.zip",
+    tags: ["web", "network"],
+    new: true         // solo NEW
   }
 ];
+
