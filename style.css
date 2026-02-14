@@ -1,6 +1,8 @@
 :root{
   --max: 1100px;
-  --bg: #050a08;
+
+  /* Background blu/violaceo */
+  --bg: #0b1020;
 
   --text: rgba(255,255,255,0.92);
   --muted: rgba(255,255,255,0.72);
@@ -9,15 +11,19 @@
   --card2: rgba(255,255,255,0.10);
   --border: rgba(255,255,255,0.14);
 
-  --accent: #00ff99;
-  --accent2: #33ffcc;
+  /* UI blu/violacea (come prima) */
+  --accent: #7c5cff;
+  --accent2: #33d6ff;
+
+  /* Verde SOLO per PCB e “new-mini” */
+  --pcb: rgba(0,255,170,0.22);
+  --pcb2: rgba(0,255,170,0.12);
   --good: #00ffcc;
 
   --shadow: 0 18px 45px rgba(0,0,0,0.38);
 }
 
 *{ box-sizing:border-box; }
-
 html, body{ height:100%; }
 
 body{
@@ -25,11 +31,14 @@ body{
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
   color: var(--text);
   line-height: 1.4;
+
+  /* Sfumatura blu/violacea */
   background:
-    radial-gradient(1200px 600px at 8% 0%, rgba(124,92,255,0.35), transparent 60%),
-    radial-gradient(900px 500px at 95% 12%, rgba(51,214,255,0.22), transparent 55%),
-    radial-gradient(700px 420px at 50% 120%, rgba(0,255,204,0.10), transparent 60%),
+    radial-gradient(1200px 600px at 8% 0%, rgba(124,92,255,0.38), transparent 60%),
+    radial-gradient(1000px 520px at 95% 12%, rgba(51,214,255,0.22), transparent 55%),
+    radial-gradient(900px 600px at 50% 115%, rgba(124,92,255,0.18), transparent 62%),
     var(--bg);
+
   overflow-x: hidden;
 }
 
@@ -38,49 +47,48 @@ body{
 /* FX layers */
 .fx{
   position: fixed;
-  inset: 0;
+  /* più grande del viewport -> niente artefatti */
+  inset: -140px;
   pointer-events: none;
   z-index: -1;
 }
 
-/* PCB overlay */
+/* PCB overlay (verde, elaborato) */
 .fx-pcb{
-  background-image: url("assets/pcb-vertical.svg");
-  background-size: cover;
-  opacity: 0.16;
-  filter: contrast(1.15) saturate(1.25);
+  background-image: url("assets/pcb-green.svg");
+  background-size: 780px 780px;
+  background-repeat: repeat;
+  opacity: 0.22;
+  filter: contrast(1.1) saturate(1.2);
 }
 
-
-/* Scanlines */
+/* Scanlines (FIX: niente transform = niente banda) */
 .fx-scan{
   background-image: linear-gradient(
-    rgba(255,255,255,0.025) 1px,
+    rgba(255,255,255,0.020) 1px,
     transparent 1px
   );
-  background-size: 100% 3px;
+  background-size: 100% 4px;
   opacity: 0.55;
-  animation: scan 18s linear infinite;
+  animation: scanPos 18s linear infinite;
 }
 
-/* Subtle noise (optional, uses CSS only) */
+@keyframes scanPos{
+  0%{ background-position: 0 0; }
+  100%{ background-position: 0 240px; }
+}
+
+/* Noise leggero */
 .fx-noise{
   background-image:
-    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.04), transparent 45%),
-    radial-gradient(circle at 80% 10%, rgba(255,255,255,0.03), transparent 55%),
-    radial-gradient(circle at 60% 70%, rgba(255,255,255,0.02), transparent 60%);
-  opacity: 0.40;
-}
-
-@keyframes scan{
-  0%{ transform: translateY(0); }
-  100%{ transform: translateY(120px); }
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.035), transparent 45%),
+    radial-gradient(circle at 80% 10%, rgba(255,255,255,0.028), transparent 55%),
+    radial-gradient(circle at 60% 70%, rgba(255,255,255,0.020), transparent 60%);
+  opacity: 0.35;
 }
 
 /* Hero */
-.hero{
-  padding-top: 26px;
-}
+.hero{ padding-top: 26px; }
 
 .hero-top{
   display:flex;
@@ -399,23 +407,26 @@ a.btn.primary{
   font-weight: 1000;
 }
 
-/* Badge (per app) */
+/* Badge (per app) - FIX LEGGIBILITÀ */
 .badge{
   position:absolute;
   top: 10px; left: 10px;
   z-index: 5;
-  padding: 6px 10px;
+  padding: 7px 11px;
   border-radius: 999px;
   font-size: 12px;
   font-weight: 1000;
   letter-spacing: .4px;
   color: #081022;
   background: linear-gradient(90deg, var(--accent), var(--accent2));
-  border: 1px solid rgba(255,255,255,0.22);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.30);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.35);
+  backdrop-filter: blur(8px);
+  outline: 2px solid rgba(0,0,0,0.35);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.25);
 }
 
-/* "NEW" micro badge next to title (optional) */
+/* NEW mini - verde */
 .new-mini{
   display:inline-flex;
   align-items:center;
@@ -425,8 +436,9 @@ a.btn.primary{
   border-radius: 999px;
   font-size: 11px;
   font-weight: 1000;
-  color: #081022;
-  background: linear-gradient(90deg, var(--good), rgba(51,214,255,0.9));
+  color: #051014;
+  background: linear-gradient(90deg, var(--good), rgba(0,255,170,0.85));
+  border: 1px solid rgba(255,255,255,0.18);
 }
 
 /* Empty */
