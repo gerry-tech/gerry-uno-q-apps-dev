@@ -39,7 +39,7 @@ body{
     radial-gradient(900px 600px at 50% 115%, rgba(124,92,255,0.18), transparent 62%),
     var(--bg);
 
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .wrap{ max-width: var(--max); margin: 0 auto; padding: 18px; }
@@ -48,7 +48,7 @@ body{
 .fx{
   position: fixed;
   /* più grande del viewport -> niente artefatti */
-  inset: -140px;
+  inset: -80px;
   pointer-events: none;
   z-index: -1;
 }
@@ -459,3 +459,19 @@ a.btn.primary{
 
 /* Card click -> keep links clickable */
 .card a{ cursor: default; }
+/* Fade in basso per evitare righe/artefatti del pattern */
+body::after{
+  content:"";
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 140px;
+  pointer-events: none;
+  z-index: -1;
+  background: linear-gradient(to bottom,
+    rgba(11,16,32,0) 0%,
+    rgba(11,16,32,0.55) 40%,
+    rgba(11,16,32,0.92) 100%
+  );
+}
