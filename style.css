@@ -52,12 +52,22 @@ header, main, footer, .wrap{
 }
 
 /* FX layers (sotto al contenuto, sopra al background) */
+/* FIX: fade degli FX molto morbido (niente stacco visibile) */
 .fx{
-  position: fixed;
-  inset: -80px;
-  pointer-events: none;
-  z-index: 1;
+  -webkit-mask-image: linear-gradient(to bottom,
+    #000 0%,
+    #000 92%,
+    rgba(0,0,0,0.65) 96%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(to bottom,
+    #000 0%,
+    #000 92%,
+    rgba(0,0,0,0.65) 96%,
+    transparent 100%
+  );
 }
+
 
 /* PCB overlay */
 .fx-pcb{
@@ -72,14 +82,12 @@ header, main, footer, .wrap{
 
 /* Scanlines (no transform, no banda) */
 .fx-scan{
-  background-image: linear-gradient(
-    rgba(255,255,255,0.020) 1px,
-    transparent 1px
-  );
-  background-size: 100% 4px;
-  opacity: 0.55;
-  animation: scanPos 18s linear infinite;
+  background-image: linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px);
+  background-size: 100% 6px;
+  opacity: 0.35;
+  animation: scanPos 28s linear infinite;
 }
+
 
 @keyframes scanPos{
   0%{ background-position: 0 0; }
