@@ -11,13 +11,11 @@
   --card2: rgba(255,255,255,0.10);
   --border: rgba(255,255,255,0.14);
 
-  /* UI blu/violacea (come prima) */
+  /* UI blu/violacea */
   --accent: #7c5cff;
   --accent2: #33d6ff;
 
-  /* Verde SOLO per PCB e “new-mini” */
-  --pcb: rgba(0,255,170,0.22);
-  --pcb2: rgba(0,255,170,0.12);
+  /* Verde PCB */
   --good: #00ffcc;
 
   --shadow: 0 18px 45px rgba(0,0,0,0.38);
@@ -25,11 +23,10 @@
 
 *{ box-sizing:border-box; }
 
-overflow-y: auto;
-
-
+html{ height: 100%; }
 body{
   margin:0;
+  min-height: 100%;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
   color: var(--text);
   line-height: 1.4;
@@ -41,22 +38,28 @@ body{
     radial-gradient(900px 600px at 50% 115%, rgba(124,92,255,0.18), transparent 62%),
     var(--bg);
 
+  /* SCROLL OK */
   overflow-x: hidden;
-  
+  overflow-y: auto;
 }
 
 .wrap{ max-width: var(--max); margin: 0 auto; padding: 18px; }
 
-/* FX layers */
-.fx{
-  position: fixed;
-  /* più grande del viewport -> niente artefatti */
-  inset: -80px;
-  pointer-events: none;
-  z-index: -1;
+/* Metti contenuto sopra gli FX */
+header, main, footer, .wrap{
+  position: relative;
+  z-index: 2;
 }
 
-/* PCB overlay (verde, elaborato) */
+/* FX layers (sotto al contenuto, sopra al background) */
+.fx{
+  position: fixed;
+  inset: -80px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* PCB overlay */
 .fx-pcb{
   background-image: url("assets/pcb-green.svg");
   background-size: 780px 780px;
@@ -65,7 +68,7 @@ body{
   filter: contrast(1.1) saturate(1.2);
 }
 
-/* Scanlines (FIX: niente transform = niente banda) */
+/* Scanlines (no transform, no banda) */
 .fx-scan{
   background-image: linear-gradient(
     rgba(255,255,255,0.020) 1px,
@@ -81,13 +84,30 @@ body{
   100%{ background-position: 0 240px; }
 }
 
-/* Noise leggero */
+/* Noise */
 .fx-noise{
   background-image:
     radial-gradient(circle at 20% 30%, rgba(255,255,255,0.035), transparent 45%),
     radial-gradient(circle at 80% 10%, rgba(255,255,255,0.028), transparent 55%),
     radial-gradient(circle at 60% 70%, rgba(255,255,255,0.020), transparent 60%);
   opacity: 0.35;
+}
+
+/* Fade basso (solo per chiudere bene il pattern) */
+body::after{
+  content:"";
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 120px;
+  pointer-events: none;
+  z-index: 1; /* stesso livello degli FX */
+  background: linear-gradient(to bottom,
+    rgba(11,16,32,0) 0%,
+    rgba(11,16,32,0.25) 35%,
+    rgba(11,16,32,0.72) 100%
+  );
 }
 
 /* Hero */
@@ -410,7 +430,7 @@ a.btn.primary{
   font-weight: 1000;
 }
 
-/* Badge (per app) - FIX LEGGIBILITÀ */
+/* Badge */
 .badge{
   position:absolute;
   top: 10px; left: 10px;
@@ -426,11 +446,9 @@ a.btn.primary{
   box-shadow: 0 10px 20px rgba(0,0,0,0.35);
   backdrop-filter: blur(8px);
   outline: 2px solid rgba(0,0,0,0.35);
-  text-shadow: 0 1px 0 rgba(255,255,255,0.25);
 }
 
-/* NEW mini - FIX: contrasto alto, stile UI blu/violacea */
-/* NEW mini - nero, leggibile sempre */
+/* NEW mini - nero */
 .new-mini{
   display:inline-flex;
   align-items:center;
@@ -440,17 +458,13 @@ a.btn.primary{
   font-size: 11px;
   font-weight: 1000;
   letter-spacing: .3px;
-
   color: rgba(255,255,255,0.92);
   background: rgba(0,0,0,0.55);
   border: 1px solid rgba(255,255,255,0.22);
-
   box-shadow: 0 10px 18px rgba(0,0,0,0.28),
               0 0 18px rgba(124,92,255,0.18);
   backdrop-filter: blur(8px);
 }
-
-
 
 /* Empty */
 .empty{ color: var(--muted); }
@@ -465,19 +479,3 @@ a.btn.primary{
 
 /* Card click -> keep links clickable */
 .card a{ cursor: default; }
-/* Fade in basso per evitare righe/artefatti del pattern */
-body::after{
-  content:"";
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 140px;
-  pointer-events: none;
-  z-index: -1;
-  background: linear-gradient(to bottom,
-    rgba(11,16,32,0) 0%,
-    rgba(11,16,32,0.55) 40%,
-    rgba(11,16,32,0.92) 100%
-  );
-}
