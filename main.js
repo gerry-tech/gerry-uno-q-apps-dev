@@ -150,6 +150,7 @@ function init() {
 init();
 
 // Card click -> download ZIP (senza rompere i bottoni)
+// Card click -> download ZIP FIX (no 404 su GitHub Pages)
 document.addEventListener("click", (e) => {
   if (e.target.closest("a")) return;
 
@@ -159,5 +160,9 @@ document.addEventListener("click", (e) => {
   const zip = card.dataset.zip;
   if (!zip) return;
 
-  window.open(zip, "_blank", "noopener");
+  // trasforma path relativo in URL assoluta (fix 404)
+  const absoluteZip = new URL(zip, window.location.href).href;
+
+  window.open(absoluteZip, "_blank", "noopener");
 });
+
