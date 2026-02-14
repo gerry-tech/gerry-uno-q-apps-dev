@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <pattern id="vpat" width="220" height="220" patternUnits="userSpaceOnUse">
+      <rect width="220" height="220" fill="transparent"/>
+
+      <!-- linee verticali principali -->
+      <path d="M40 0 V220 M110 0 V220 M180 0 V220"
+            stroke="rgba(0,255,170,0.22)" stroke-width="2" stroke-linecap="round"/>
+
+      <!-- diramazioni -->
+      <path d="M40 40 H120 V80 H180
+               M110 140 H60 V180 H40
+               M180 120 H140 V160 H110"
+            fill="none" stroke="rgba(0,255,170,0.18)" stroke-width="2" stroke-linecap="round"/>
+
+      <!-- micro linee -->
+      <path d="M70 0 V220 M150 0 V220"
+            stroke="rgba(0,255,170,0.10)" stroke-width="1.2" stroke-linecap="round"/>
+
+      <!-- vias -->
+      <g fill="rgba(0,255,170,0.35)">
+        <circle cx="40" cy="40" r="4"/>
+        <circle cx="110" cy="80" r="4"/>
+        <circle cx="180" cy="80" r="4"/>
+        <circle cx="110" cy="140" r="4"/>
+        <circle cx="40" cy="180" r="4"/>
+        <circle cx="180" cy="120" r="4"/>
+        <circle cx="140" cy="160" r="4"/>
+      </g>
+
+      <!-- griglia leggera -->
+      <path d="M0 0 H220 M0 110 H220 M0 220 H220
+               M0 0 V220 M110 0 V220 M220 0 V220"
+            stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#vpat)"/>
+</svg>
