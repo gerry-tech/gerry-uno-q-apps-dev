@@ -102,3 +102,21 @@ document.addEventListener("click", (e) => {
 
   window.open(zip, "_blank", "noopener");
 });
+
+const latestVideo = {
+  title: "Titolo video",
+  url: "https://youtube.com/xxxx",
+  date: "2026-02-14"
+};
+
+const today = new Date();
+const videoDate = new Date(latestVideo.date);
+
+const diffDays = (today - videoDate) / (1000*60*60*24);
+
+if(diffDays <= 3) {
+  document.getElementById("videoPing").innerHTML =
+    `<a href="${latestVideo.url}" class="new-video">
+      🟢 NEW VIDEO - Guarda ora
+    </a>`;
+}
