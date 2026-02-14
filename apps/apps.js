@@ -2,7 +2,7 @@ const APPS = [
   {
     title: "Web UI Servo Controller",
     desc: "Controlla un servo da pagina web con Arduino UNO Q + Web UI.",
-    zip: "apps/WebUIServo.zip",
+    zip: "https://github.com/gerry-tech/gerry-uno-q-apps-dev/raw/refs/heads/main/apps/display-a-7-segmenti/Display%20a%207%20segmenti.zip",
     preview: "apps/roulette-servo/preview.jpg",
     tags: ["web", "servo", "ui"],
     requires: "Servo + cavetti",
