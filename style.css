@@ -45,11 +45,12 @@ body{
 
 /* PCB overlay */
 .fx-pcb{
-  background-image: url("assets/pcb-pattern.svg");
+  background-image: url("assets/pcb-vertical.svg");
   background-size: cover;
-  opacity: 0.10;
-  filter: contrast(1.1) saturate(1.2);
+  opacity: 0.16;
+  filter: contrast(1.15) saturate(1.25);
 }
+
 
 /* Scanlines */
 .fx-scan{
