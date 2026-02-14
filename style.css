@@ -62,11 +62,13 @@ header, main, footer, .wrap{
 /* PCB overlay */
 .fx-pcb{
   background-image: url("assets/pcb-green.svg");
-  background-size: 780px 780px;
-  background-repeat: repeat;
+  background-size: cover;        /* <-- invece di 780px 780px */
+  background-repeat: no-repeat;  /* <-- invece di repeat */
+  background-position: center;
   opacity: 0.22;
   filter: contrast(1.1) saturate(1.2);
 }
+
 
 /* Scanlines (no transform, no banda) */
 .fx-scan{
