@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900">
+  <defs>
+    <pattern id="pcb" width="300" height="300" patternUnits="userSpaceOnUse">
+      <rect width="300" height="300" fill="transparent"/>
+
+      <!-- Piste principali -->
+      <path d="M30 60 H120 V30 H210 V120 H270"
+            fill="none" stroke="rgba(0,255,170,0.30)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M40 250 H140 V200 H220 V260 H290"
+            fill="none" stroke="rgba(0,255,170,0.26)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M260 40 H180 V90 H110 V160 H40"
+            fill="none" stroke="rgba(0,255,170,0.22)" stroke-width="3" stroke-linecap="round"/>
+
+      <!-- Piste secondarie -->
+      <path d="M75 0 V70 H140 V110 H210"
+            fill="none" stroke="rgba(0,255,170,0.16)" stroke-width="2" stroke-linecap="round"/>
+      <path d="M300 120 H240 V180 H190 V230"
+            fill="none" stroke="rgba(0,255,170,0.16)" stroke-width="2" stroke-linecap="round"/>
+      <path d="M0 150 H70 V220 H120"
+            fill="none" stroke="rgba(0,255,170,0.14)" stroke-width="2" stroke-linecap="round"/>
+
+      <!-- Diagonali (più “elaborato”) -->
+      <path d="M40 120 L120 200 L200 120 L260 180"
+            fill="none" stroke="rgba(0,255,170,0.12)" stroke-width="2" stroke-linecap="round"/>
+
+      <!-- Nodi / vias -->
+      <g fill="rgba(0,255,170,0.42)">
+        <circle cx="30" cy="60" r="6"/>
+        <circle cx="120" cy="60" r="6"/>
+        <circle cx="120" cy="30" r="6"/>
+        <circle cx="210" cy="30" r="6"/>
+        <circle cx="210" cy="120" r="6"/>
+        <circle cx="270" cy="120" r="6"/>
+
+        <circle cx="40" cy="250" r="6"/>
+        <circle cx="140" cy="250" r="6"/>
+        <circle cx="140" cy="200" r="6"/>
+        <circle cx="220" cy="200" r="6"/>
+        <circle cx="220" cy="260" r="6"/>
+        <circle cx="290" cy="260" r="6"/>
+
+        <circle cx="260" cy="40" r="6"/>
+        <circle cx="180" cy="40" r="6"/>
+        <circle cx="180" cy="90" r="6"/>
+        <circle cx="110" cy="90" r="6"/>
+        <circle cx="110" cy="160" r="6"/>
+        <circle cx="40" cy="160" r="6"/>
+      </g>
+
+      <!-- Pad / chip outline -->
+      <g fill="rgba(0,255,170,0.06)" stroke="rgba(0,255,170,0.16)" stroke-width="2">
+        <rect x="165" y="165" width="70" height="40" rx="10"/>
+        <rect x="18" y="18" width="80" height="46" rx="12"/>
+      </g>
+
+      <!-- Micro-griglia tech -->
+      <path d="M0 0 H300 M0 100 H300 M0 200 H300 M0 300 H300
+               M0 0 V300 M100 0 V300 M200 0 V300 M300 0 V300"
+            stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="900" height="900" fill="url(#pcb)"/>
+</svg>
