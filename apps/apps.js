@@ -13,7 +13,7 @@ const APPS = [
   {
     title: "Matrix Animations Pack",
     desc: "Set di animazioni pronte per LED matrix (formato uint32_t).",
-    zip: "apps/MatrixPack.zip",
+    zip: "https://github.com/gerry-tech/gerry-uno-q-apps-dev/raw/refs/heads/main/apps/stickman/MatrixAnimation.zip",
     preview: "apps/reaction-time-test/preview.png",
     tags: ["matrix", "led"],
     requires: "LED Matrix",
