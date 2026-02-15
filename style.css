@@ -522,3 +522,19 @@ body::after{
   opacity: 1;
   color: white;
 }
+
+.discord-btn {
+  display: inline-block;
+  padding: 12px 20px;
+  background: #5865F2;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.25s ease;
+}
+
+.discord-btn:hover {
+  background: #4752c4;
+  transform: translateY(-2px);
+}
