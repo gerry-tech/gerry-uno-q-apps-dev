@@ -523,18 +523,27 @@ body::after{
   color: white;
 }
 
-.discord-btn {
-  display: inline-block;
-  padding: 12px 20px;
-  background: #5865F2;
-  color: white;
-  text-decoration: none;
-  border-radius: 10px;
+.discord-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
   font-weight: 600;
-  transition: 0.25s ease;
+  color: white;
+  background: linear-gradient(135deg,#5865F2,#404EED);
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: 0 0 20px rgba(88,101,242,0.4);
+  transition: all 0.3s ease;
 }
 
-.discord-btn:hover {
-  background: #4752c4;
-  transform: translateY(-2px);
+.discord-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 30px rgba(88,101,242,0.7);
 }
+
+.discord-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
