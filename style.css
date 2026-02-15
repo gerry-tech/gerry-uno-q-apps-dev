@@ -1,7 +1,5 @@
 :root{
   --max: 1100px;
-
-  /* Background blu/violaceo */
   --bg: #0b1020;
 
   --text: rgba(255,255,255,0.92);
@@ -9,11 +7,9 @@
 
   --border: rgba(255,255,255,0.14);
 
-  /* UI blu/violacea */
   --accent: #7c5cff;
   --accent2: #33d6ff;
 
-  /* Verde PCB */
   --good: #00ffcc;
 
   --shadow: 0 18px 45px rgba(0,0,0,0.38);
@@ -34,7 +30,6 @@ body{
   color: var(--text);
   line-height: 1.4;
 
-  /* SOLO sfumature (NO vignetta / NO fade) */
   background:
     radial-gradient(1200px 640px at 10% 0%, rgba(124,92,255,0.34), transparent 62%),
     radial-gradient(1100px 600px at 92% 10%, rgba(51,214,255,0.20), transparent 60%),
@@ -63,8 +58,6 @@ header, main, footer, .wrap{
   inset: 0;
   pointer-events: none;
   z-index: 1;
-
-  /* NIENTE transform/translateZ -> meno seam */
   backface-visibility: hidden;
 }
 
@@ -72,11 +65,10 @@ header, main, footer, .wrap{
 .fx-pcb{
   background-image: url("assets/pcb-green.svg");
   background-repeat: repeat;
-  background-size: 720px 720px;     /* più fitto: 560px 560px */
+  background-size: 720px 720px;
   background-position: 0 0;
   opacity: 0.18;
   filter: saturate(1.2) contrast(1.05);
-  /* tolto mix-blend-mode: evita stacchi di luminosità */
 }
 
 /* Scanlines (molto soft) */
@@ -141,6 +133,15 @@ h1{
 }
 
 .sub{ color: var(--muted); margin: 0 0 12px; }
+
+/* NEW: CTA row inside hero */
+.hero-actions{
+  margin: 10px 0 12px;
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
 
 .hero-pills{
   display:flex;
@@ -476,14 +477,15 @@ a.btn.primary{
 
 /* Card click -> keep links clickable */
 .card a{ cursor: default; }
+
 /* FIX BANDIERE/LINEA: micro-dither sopra al background */
 body::after{
   content:"";
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 0;              /* sta sopra al bg del body, ma sotto agli .fx (che sono z-index:1) */
-  opacity: 0.065;          /* alza a 0.085 se vuoi ancora più invisibile la riga */
+  z-index: 0;
+  opacity: 0.065;
   background-image:
     repeating-linear-gradient(
       0deg,
@@ -492,7 +494,7 @@ body::after{
       rgba(0,0,0,0.000) 2px,
       rgba(0,0,0,0.000) 4px
     );
-  mix-blend-mode: overlay; /* dither senza “macchiare” troppo */
+  mix-blend-mode: overlay;
 }
 
 /* Version label (bottom right) */
@@ -523,27 +525,46 @@ body::after{
   color: white;
 }
 
-.discord-cta {
+/* =========================
+   DISCORD CTA (ULTRA PRO)
+   ========================= */
+.discord-cta{
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 14px 24px;
-  font-weight: 600;
+  padding: 14px 18px;
+  font-weight: 800;
+  letter-spacing: .2px;
   color: white;
   background: linear-gradient(135deg,#5865F2,#404EED);
-  border-radius: 12px;
+  border-radius: 14px;
   text-decoration: none;
-  box-shadow: 0 0 20px rgba(88,101,242,0.4);
-  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(88,101,242,0.35);
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+
+  /* Anti-float: se avevi vecchie regole fixed, le neutralizza */
+  position: static !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  top: auto !important;
 }
 
-.discord-cta:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0 30px rgba(88,101,242,0.7);
+.discord-cta:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 0 32px rgba(88,101,242,0.55);
+  filter: brightness(1.03);
 }
 
-.discord-icon svg {
+.discord-icon{
+  display:inline-flex;
   width: 20px;
   height: 20px;
 }
 
+.discord-icon svg{
+  width: 20px;
+  height: 20px;
+  display:block;
+  opacity: 0.95;
+}
