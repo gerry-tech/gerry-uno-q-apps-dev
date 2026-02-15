@@ -564,14 +564,14 @@ body::after{
   display:grid;
   place-items:center;
   border-radius: 999px;
-  background: rgba(255,255,255,0.14);
-  border: 1px solid rgba(255,255,255,0.22);
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.20);
+  background: rgba(255,255,255,0.92);      /* bianco = riconoscibile */
+  border: 1px solid rgba(0,0,0,0.10);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.10);
 }
 
 .discord-icon svg{
   width: 18px;
   height: 18px;
   display:block;
-  opacity: 0.95;
+  color: #5865F2;                          /* viola Discord */
 }
