@@ -8,7 +8,10 @@ const APPS = [
     requires: "Servo + cavetti",
     badge: "TOP",     // grande in alto a sinistra
     new: true,        // mini NEW vicino al titolo
-    demo: "https://www.youtube.com/watch?v=O9AB-pAx9fA&t=306s" // opzionale
+    demo: "https://www.youtube.com/watch?v=O9AB-pAx9fA&t=306s",
+    level: "beginner",
+    date: "2026/02/16",
+    downloads: 100,
   },
   {
     title: "Matrix Animations Pack",
