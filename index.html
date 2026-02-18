@@ -3,23 +3,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>UNO Q Apps Library</title>
+  <title>UNO Q APPS STORE</title>
 
-  <meta name="description" content="Download apps gratuite per Arduino UNO Q. ZIP pronti da importare in Arduino App Lab. Web UI, Servo, Matrix e progetti community." />
+  <meta name="description" content="Professional international app store for Arduino UNO Q projects. Discover, filter, favorite, and download ready-to-import ZIP apps from the community." />
 
-  <link rel="stylesheet" href="style.css?v=120" />
+  <link rel="stylesheet" href="style.css?v=140" />
   <link rel="icon" href="data:,">
 </head>
 
 <body>
-  <div class="site-version">v1.2</div>
+  <div class="site-version">v1.4</div>
 
   <div class="lang-toggle" role="group" aria-label="Language">
     <button id="langEN" class="lang-btn" type="button" aria-pressed="false">EN</button>
     <button id="langIT" class="lang-btn" type="button" aria-pressed="false">IT</button>
   </div>
 
-  <!-- FX layers -->
   <div class="fx fx-pcb" aria-hidden="true"></div>
   <div class="fx fx-scan" aria-hidden="true"></div>
   <div class="fx fx-noise" aria-hidden="true"></div>
@@ -28,20 +27,20 @@
     <div class="hero-top">
       <div class="hero-title">
         <div class="kicker" data-i18n="kicker">Arduino UNO Q • Community Hub</div>
-        <h1 data-i18n="hero_title">UNO Q Apps Library</h1>
-        <p class="sub" data-i18n="hero_sub">Download free apps for Arduino UNO Q. ZIPs ready to import in Arduino App Lab. Web apps, servo controls, LED matrix and community projects.</p>
+        <h1 data-i18n="hero_title">UNO Q APPS STORE</h1>
+        <p class="sub" data-i18n="hero_sub">A professional, international app catalog for Arduino UNO Q with curated ZIP projects and real community builds.</p>
 
-        <!-- CTA ROW -->
-<div class="hero-actions">
-  <a href="https://discord.gg/9DG42pSMGm" target="_blank" rel="noreferrer" class="discord-cta">
-    <span class="discord-icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" aria-hidden="true" role="img">
-        <path d="M19.54 0H4.46C2 0 0 2.02 0 4.5v15C0 21.98 2 24 4.46 24h12.62l-.6-2.08 1.45 1.35 1.37 1.27L24 24V4.5C24 2.02 22 0 19.54 0ZM15.84 16.8s-.35-.42-.64-.8c1.27-.36 1.75-1.16 1.75-1.16-.4.26-.78.44-1.12.56-.5.2-.98.33-1.45.41-.96.18-1.84.13-2.6-.01-.57-.1-1.06-.24-1.47-.41-.23-.09-.48-.2-.74-.34-.03-.02-.06-.03-.09-.05-.02-.01-.03-.02-.04-.03-.18-.1-.28-.17-.28-.17s.46.78 1.67 1.15c-.29.38-.65.83-.65.83-2.15-.07-2.97-1.48-2.97-1.48 0-3.13 1.4-5.67 1.4-5.67 1.4-1.05 2.73-1.02 2.73-1.02l.1.12c-1.75.5-2.56 1.26-2.56 1.26s.21-.11.57-.27c1.03-.45 1.85-.57 2.19-.6.06-.01.11-.02.17-.02.62-.08 1.33-.1 2.08-.02.99.11 2.05.39 3.12 1.01 0 0-.77-.73-2.43-1.23l.14-.15s1.33-.03 2.73 1.02c0 0 1.4 2.54 1.4 5.67 0 0-.83 1.41-2.98 1.48ZM9.27 12.78c-.55 0-1-.5-1-1.11 0-.61.44-1.11 1-1.11.55 0 1 .5 1 1.11 0 .61-.45 1.11-1 1.11Zm5.46 0c-.55 0-1-.5-1-1.11 0-.61.45-1.11 1-1.11s1 .5 1 1.11c0 .61-.45 1.11-1 1.11Z" />
-      </svg>
-    </span>
-    <span data-i18n="join_discord">Join Our Discord</span>
-  </a>
-</div>
+        <div class="hero-actions">
+          <a href="https://discord.gg/9DG42pSMGm" target="_blank" rel="noreferrer" class="discord-cta">
+            <span class="discord-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true" role="img">
+                <path d="M19.54 0H4.46C2 0 0 2.02 0 4.5v15C0 21.98 2 24 4.46 24h12.62l-.6-2.08 1.45 1.35 1.37 1.27L24 24V4.5C24 2.02 22 0 19.54 0ZM15.84 16.8s-.35-.42-.64-.8c1.27-.36 1.75-1.16 1.75-1.16-.4.26-.78.44-1.12.56-.5.2-.98.33-1.45.41-.96.18-1.84.13-2.6-.01-.57-.1-1.06-.24-1.47-.41-.23-.09-.48-.2-.74-.34-.03-.02-.06-.03-.09-.05-.02-.01-.03-.02-.04-.03-.18-.1-.28-.17-.28-.17s.46.78 1.67 1.15c-.29.38-.65.83-.65.83-2.15-.07-2.97-1.48-2.97-1.48 0-3.13 1.4-5.67 1.4-5.67 1.4-1.05 2.73-1.02 2.73-1.02l.1.12c-1.75.5-2.56 1.26-2.56 1.26s.21-.11.57-.27c1.03-.45 1.85-.57 2.19-.6.06-.01.11-.02.17-.02.62-.08 1.33-.1 2.08-.02.99.11 2.05.39 3.12 1.01 0 0-.77-.73-2.43-1.23l.14-.15s1.33-.03 2.73 1.02c0 0 1.4 2.54 1.4 5.67 0 0-.83 1.41-2.98 1.48ZM9.27 12.78c-.55 0-1-.5-1-1.11 0-.61.44-1.11 1-1.11.55 0 1 .5 1 1.11 0 .61-.45 1.11-1 1.11Zm5.46 0c-.55 0-1-.5-1-1.11 0-.61.45-1.11 1-1.11s1 .5 1 1.11c0 .61-.45 1.11-1 1.11Z" />
+              </svg>
+            </span>
+            <span data-i18n="join_discord">Join Our Discord</span>
+          </a>
+        </div>
+
         <div class="hero-pills">
           <span class="pill" data-i18n="pill_zip">Ready ZIPs</span>
           <span class="pill" data-i18n="pill_web">Web UI</span>
@@ -52,8 +51,7 @@
 
       <div class="hero-side">
         <div id="videoPing" class="video-ping" hidden></div>
-
-        <div class="notice"><strong data-i18n="note_label">Note:</strong> <span data-i18n="note_text">community project not affiliated with Arduino.</span></div>
+        <div class="notice"><strong data-i18n="note_label">Note:</strong> <span data-i18n="note_text">Independent project, not affiliated with Arduino.</span></div>
       </div>
     </div>
 
@@ -62,7 +60,7 @@
         <img class="channel-img" src="assets/banner.jpg" alt="Gerry&Tech">
         <div class="channel-info">
           <h2>Gerry&Tech</h2>
-          <p data-i18n="channel_desc">Arduino UNO Q, electronics from easy→pro, real projects and community apps.</p>
+          <p data-i18n="channel_desc">Arduino UNO Q tutorials from beginner to pro, hands-on electronics, and community apps.</p>
           <div class="channel-cta">
             <a class="btn primary" href="https://www.youtube.com/channel/UCjXdbreXXKrvXyU1SvKOJqw" target="_blank" rel="noreferrer"><span data-i18n="go_channel">Go to channel</span></a>
             <a class="btn" href="https://github.com/gerry-tech/gerry-uno-q-apps" target="_blank" rel="noreferrer"><span data-i18n="repo_github">GitHub Repo</span></a>
@@ -71,7 +69,27 @@
       </div>
     </section>
 
-    
+    <section class="quick-stats" aria-live="polite">
+      <div class="stat-card">
+        <span data-i18n="stat_apps">Apps</span>
+        <strong id="statApps">0</strong>
+      </div>
+      <div class="stat-card">
+        <span data-i18n="stat_downloads">Downloads</span>
+        <strong id="statDownloads">0</strong>
+      </div>
+      <div class="stat-card">
+        <span data-i18n="stat_featured">Featured</span>
+        <strong id="statFeatured">0</strong>
+      </div>
+      <div class="stat-card">
+        <span data-i18n="stat_favorites">Favorites</span>
+        <strong id="statFavorites">0</strong>
+      </div>
+    </section>
+
+    <div class="quick-filters" id="quickFilters"></div>
+
     <div class="controls">
       <input id="q" type="search" data-i18n-placeholder="search_ph" placeholder="Search (e.g. matrix, web, servo)..." />
       <select id="tag">
@@ -87,9 +105,17 @@
         <option value="new" data-i18n="sort_new">Newest</option>
         <option value="trending" data-i18n="sort_trending">Trending</option>
         <option value="downloads" data-i18n="sort_downloads">Most downloaded</option>
+        <option value="name" data-i18n="sort_name">Name A–Z</option>
       </select>
+      <label class="featured-filter">
+        <input id="featuredOnly" type="checkbox" />
+        <span data-i18n="featured_only">Featured only</span>
+      </label>
+      <label class="featured-filter">
+        <input id="favoritesOnly" type="checkbox" />
+        <span data-i18n="favorites_only">Favorites only</span>
+      </label>
     </div>
-
   </header>
 
   <main class="wrap">
@@ -101,6 +127,7 @@
       </div>
     </div>
 
+    <div id="resultCount" class="result-count tiny"></div>
     <div id="grid" class="grid"></div>
 
     <footer class="footer">
@@ -109,7 +136,9 @@
     </footer>
   </main>
 
-  <script src="apps/apps.js?v=120"></script>
-  <script src="main.js?v=120"></script>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="apps/apps.js?v=140"></script>
+  <script src="main.js?v=140"></script>
 </body>
 </html>
