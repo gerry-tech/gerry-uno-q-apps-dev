@@ -728,3 +728,26 @@ body::after{
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
+
+/* Requested fixes */
+.submit-app-cta{
+  background: linear-gradient(135deg, #00d4ff, #7c5cff) !important;
+  color: #081022 !important;
+  border-color: transparent !important;
+  font-weight: 900;
+}
+
+.submit-app-cta:hover{
+  box-shadow: 0 10px 24px rgba(51,214,255,0.35);
+}
+
+.copy-btn{
+  background: linear-gradient(135deg, #ff7a18, #ffd166) !important;
+  color: #241400 !important;
+  border-color: transparent !important;
+  font-weight: 900;
+}
+
+.copy-btn:hover{
+  box-shadow: 0 10px 22px rgba(255,122,24,0.35);
+}

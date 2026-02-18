@@ -63,7 +63,9 @@ const I18N = {
     quick_intermediate: "Intermediate",
     quick_web: "Web",
     quick_matrix: "Matrix",
-    quick_new: "New"
+    quick_new: "New",
+    submit_app: "Submit your app",
+    submit_app_now: "Send app now"
   },
   it: {
     kicker: "Arduino UNO Q • Hub Community",
@@ -116,7 +118,9 @@ const I18N = {
     quick_intermediate: "Intermedio",
     quick_web: "Web",
     quick_matrix: "Matrix",
-    quick_new: "Nuove"
+    quick_new: "Nuove",
+    submit_app: "Invia la tua app",
+    submit_app_now: "Invia app ora"
   }
 };
 
@@ -262,7 +266,7 @@ function render(apps) {
         <div class="btns">
           ${a.zip ? `<a class="btn primary" href="${escapeHtml(a.zip)}" target="_blank" rel="noreferrer">${tr("download_zip")}</a>` : ""}
           ${a.demo ? `<a class="btn" href="${escapeHtml(a.demo)}" target="_blank" rel="noreferrer">${tr("demo")}</a>` : ""}
-          <button class="btn" data-action="copy" data-id="${escapeHtml(a.id)}">${tr("copy_link")}</button>
+          <button class="btn copy-btn" data-action="copy" data-id="${escapeHtml(a.id)}">${tr("copy_link")}</button>
         </div>
       </div>
     `;

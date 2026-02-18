@@ -7,12 +7,12 @@
 
   <meta name="description" content="Professional international app store for Arduino UNO Q projects. Discover, filter, favorite, and download ready-to-import ZIP apps from the community." />
 
-  <link rel="stylesheet" href="style.css?v=140" />
+  <link rel="stylesheet" href="style.css?v=121" />
   <link rel="icon" href="data:,">
 </head>
 
 <body>
-  <div class="site-version">v1.4</div>
+  <div class="site-version">v1.2</div>
 
   <div class="lang-toggle" role="group" aria-label="Language">
     <button id="langEN" class="lang-btn" type="button" aria-pressed="false">EN</button>
@@ -38,6 +38,9 @@
               </svg>
             </span>
             <span data-i18n="join_discord">Join Our Discord</span>
+          </a>
+          <a href="https://github.com/gerry-tech/gerry-uno-q-apps/issues/new" target="_blank" rel="noreferrer" class="btn submit-app-cta">
+            <span data-i18n="submit_app">Submit your app</span>
           </a>
         </div>
 
@@ -132,13 +135,14 @@
 
     <footer class="footer">
       <p data-i18n="footer_send_app">Want to submit an app? Open an Issue on the repo with description + ZIP attached.</p>
+      <p><a class="btn submit-app-cta" href="https://github.com/gerry-tech/gerry-uno-q-apps/issues/new" target="_blank" rel="noreferrer"><span data-i18n="submit_app_now">Send app now</span></a></p>
       <p class="tiny" data-i18n="footer_disclaimer">Arduino® is a registered trademark. This website is independent and not affiliated with Arduino.</p>
     </footer>
   </main>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <script src="apps/apps.js?v=140"></script>
-  <script src="main.js?v=140"></script>
+  <script src="apps/apps.js?v=121"></script>
+  <script src="main.js?v=121"></script>
 </body>
 </html>
