@@ -201,30 +201,39 @@ function applyI18nText() {
 
 async function fetchLatestVideo() {
   const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${VIDEO_CHANNEL_ID}`;
-  const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(feedUrl)}`;
+  const sources = [
+    `https://api.allorigins.win/raw?url=${encodeURIComponent(feedUrl)}`,
+    `https://r.jina.ai/http://www.youtube.com/feeds/videos.xml?channel_id=${VIDEO_CHANNEL_ID}`
+  ];
 
-  try {
-    const response = await fetch(proxyUrl, { cache: "no-store" });
-    if (!response.ok) throw new Error("feed fetch failed");
-    const xml = await response.text();
-    const parsed = new DOMParser().parseFromString(xml, "text/xml");
-    const entry = parsed.querySelector("entry");
-    if (!entry) throw new Error("entry not found");
+  for (const url of sources) {
+    try {
+      const response = await fetch(url, { cache: "no-store" });
+      if (!response.ok) continue;
+      const xml = await response.text();
+      const parsed = new DOMParser().parseFromString(xml, "text/xml");
+      const entry = parsed.querySelector("entry");
+      if (!entry) continue;
 
-    const title = entry.querySelector("title")?.textContent?.trim();
-    const videoId = entry.querySelector("video\:videoId, videoId")?.textContent?.trim();
-    const publishedRaw = entry.querySelector("published")?.textContent?.trim();
-    if (!title || !videoId || !publishedRaw) throw new Error("missing fields");
+      const title = entry.querySelector("title")?.textContent?.trim();
+      const videoId = entry.querySelector("yt\:videoId, videoId")?.textContent?.trim();
+      const publishedRaw = entry.querySelector("published")?.textContent?.trim();
+      const linkHref = entry.querySelector("link")?.getAttribute("href")?.trim();
+      const finalUrl = videoId ? `https://www.youtube.com/watch?v=${videoId}` : linkHref;
+      if (!title || !finalUrl || !publishedRaw) continue;
 
-    return {
-      title,
-      url: `https://www.youtube.com/watch?v=${videoId}`,
-      date: publishedRaw.slice(0, 10),
-      showForDays: 14
-    };
-  } catch {
-    return LATEST_VIDEO_FALLBACK;
+      return {
+        title,
+        url: finalUrl,
+        date: publishedRaw.slice(0, 10),
+        showForDays: 14
+      };
+    } catch {
+      // try next source
+    }
   }
+
+  return LATEST_VIDEO_FALLBACK;
 }
 
 function setupVideoPing(videoData) {
@@ -292,6 +301,8 @@ function render(apps) {
 
     el.innerHTML = `
       ${badge}
+      <button class="icon-btn favorite-btn ${isFav ? "active" : ""}" data-action="favorite" data-id="${escapeHtml(a.id)}" aria-label="favorite">★</button>
+      <button class="icon-btn share-btn" data-action="share" data-id="${escapeHtml(a.id)}" aria-label="share">↗</button>
       <div class="thumb">${thumb}</div>
       <div class="content">
         <h3 title="${escapeHtml(a.title)}">${escapeHtml(a.title)}${a.new ? '<span class="new-mini">NEW</span>' : ""}</h3>
@@ -414,12 +425,44 @@ function appUrlForId(id) {
   return `${window.location.origin}${window.location.pathname}#app=${encodeURIComponent(id)}`;
 }
 
-function setupCardActions(apps) {
-  document.addEventListener("click", (e) => {
-    if (e.target.closest("a")) return;
+function setupCardActions(apps, refresh) {
+  document.addEventListener("click", async (e) => {
+    const actionBtn = e.target.closest("[data-action]");
+    if (actionBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      const action = actionBtn.dataset.action;
+      const id = actionBtn.dataset.id;
+      const app = apps.find((a) => a.id === id);
+      if (!app) return;
+
+      if (action === "favorite") {
+        if (state.favorites.has(id)) state.favorites.delete(id);
+        else state.favorites.add(id);
+        saveFavorites();
+        updateStats(apps);
+        refresh();
+        return;
+      }
+
+      if (action === "share") {
+        const url = appUrlForId(id);
+        try {
+          if (navigator.share) await navigator.share({ title: app.title, url });
+          else {
+            await navigator.clipboard.writeText(url);
+            showToast(tr("copied"));
+          }
+        } catch {
+          // share canceled or clipboard blocked
+        }
+        return;
+      }
+    }
+
+    if (e.target.closest("a") || e.target.closest("button")) return;
     const card = e.target.closest(".card");
     if (!card) return;
-
     const id = card.dataset.appId;
     if (!id) return;
     window.location.href = `app.html?id=${encodeURIComponent(id)}`;
@@ -470,7 +513,7 @@ async function init() {
 
   setupLanguage(refresh);
   setupQolButtons(filters.apply);
-  setupCardActions(APPS);
+  setupCardActions(APPS, filters.apply);
 
   focusHashApp(APPS);
   refresh();
