@@ -19,7 +19,29 @@ const APPS = [
     demo: "https://www.youtube.com/watch?v=O9AB-pAx9fA&t=306s",
     level: "beginner",
     date: "2026-02-16",
-    downloads: 1042
+    downloads: 1042,
+    estTime: "25 min",
+    complexity: "Easy",
+    pins: "D6",
+    codePreviewCpp: `#include <Servo.h>
+
+Servo servo;
+void setup(){
+  servo.attach(6);
+}
+void loop(){
+  servo.write(90);
+  delay(200);
+}`,
+    codePreviewPy: `from machine import Pin, PWM
+
+servo = PWM(Pin(6), freq=50)
+
+def set_angle(a):
+    duty = int(1638 + (a/180)*819)
+    servo.duty_u16(duty)
+
+set_angle(90)`
   },
   {
     id: "matrix-animations-pack",
@@ -39,7 +61,23 @@ const APPS = [
     demo: "https://www.youtube.com/watch?v=jkG8Zr1GLo0",
     level: "intermediate",
     date: "2026-02-12",
-    downloads: 678
+    downloads: 678,
+    estTime: "40 min",
+    complexity: "Medium",
+    pins: "SPI + Matrix pins",
+    codePreviewCpp: `const uint32_t frames[] = {
+  0x3C424242,
+  0x7E5A5A7E
+};
+
+for (uint8_t i=0; i<FRAME_COUNT; i++) {
+  drawFrame(frames[i]);
+}`,
+    codePreviewPy: `frames = [0x3C424242, 0x7E5A5A7E]
+
+for frame in frames:
+    draw_frame(frame)
+    sleep_ms(120)`
   },
   {
     id: "reaction-time-test",
@@ -58,7 +96,18 @@ const APPS = [
     new: true,
     level: "beginner",
     date: "2026-02-10",
-    downloads: 421
+    downloads: 421,
+    estTime: "30 min",
+    complexity: "Easy",
+    pins: "Wi-Fi only",
+    codePreviewCpp: `server.on("/react", HTTP_GET, [](){
+  const int ms = millis() - startTick;
+  server.send(200, "application/json", String(ms));
+});`,
+    codePreviewPy: `@app.get("/react")
+def react():
+    ms = ticks_ms() - start_tick
+    return {"reaction_ms": ms}`
   },
   {
     id: "servo-roulette-lab",
@@ -77,6 +126,18 @@ const APPS = [
     featured: true,
     level: "intermediate",
     date: "2026-02-09",
-    downloads: 533
+    downloads: 533,
+    estTime: "35 min",
+    complexity: "Medium",
+    pins: "D9",
+    codePreviewCpp: `int spin = random(20, 120);
+for (int i=0; i<spin; i++) {
+  servo.write(i % 180);
+  delay(18);
+}`,
+    codePreviewPy: `spin = urandom.randint(20, 120)
+for i in range(spin):
+    servo_write(i % 180)
+    sleep_ms(18)`
   }
 ];

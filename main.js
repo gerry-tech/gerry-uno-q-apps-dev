@@ -65,7 +65,11 @@ const I18N = {
     quick_matrix: "Matrix",
     quick_new: "New",
     submit_app: "Submit your app",
-    submit_app_now: "Send app now"
+    submit_app_now: "Send app now",
+    clear_filters: "Reset filters",
+    open_app_page: "Open page",
+    latest_video_fallback: "Latest upload from channel",
+    tap_to_open: "Open details"
   },
   it: {
     kicker: "Arduino UNO Q • Hub Community",
@@ -120,15 +124,21 @@ const I18N = {
     quick_matrix: "Matrix",
     quick_new: "Nuove",
     submit_app: "Invia la tua app",
-    submit_app_now: "Invia app ora"
+    submit_app_now: "Invia app ora",
+    clear_filters: "Reset filtri",
+    open_app_page: "Apri pagina",
+    latest_video_fallback: "Ultimo upload del canale",
+    tap_to_open: "Apri dettagli"
   }
 };
 
-const LATEST_VIDEO = {
+const VIDEO_CHANNEL_ID = "UCjXdbreXXKrvXyU1SvKOJqw";
+
+const LATEST_VIDEO_FALLBACK = {
   title: "MatrixAnimation",
   url: "https://www.youtube.com/watch?v=jkG8Zr1GLo0",
   date: "2026-02-14",
-  showForDays: 7
+  showForDays: 14
 };
 
 const QUICK_FILTERS = [
@@ -189,16 +199,44 @@ function applyI18nText() {
   itBtn.classList.toggle("active", state.lang === "it");
 }
 
-function setupVideoPing() {
+async function fetchLatestVideo() {
+  const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${VIDEO_CHANNEL_ID}`;
+  const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(feedUrl)}`;
+
+  try {
+    const response = await fetch(proxyUrl, { cache: "no-store" });
+    if (!response.ok) throw new Error("feed fetch failed");
+    const xml = await response.text();
+    const parsed = new DOMParser().parseFromString(xml, "text/xml");
+    const entry = parsed.querySelector("entry");
+    if (!entry) throw new Error("entry not found");
+
+    const title = entry.querySelector("title")?.textContent?.trim();
+    const videoId = entry.querySelector("video\:videoId, videoId")?.textContent?.trim();
+    const publishedRaw = entry.querySelector("published")?.textContent?.trim();
+    if (!title || !videoId || !publishedRaw) throw new Error("missing fields");
+
+    return {
+      title,
+      url: `https://www.youtube.com/watch?v=${videoId}`,
+      date: publishedRaw.slice(0, 10),
+      showForDays: 14
+    };
+  } catch {
+    return LATEST_VIDEO_FALLBACK;
+  }
+}
+
+function setupVideoPing(videoData) {
   const box = document.getElementById("videoPing");
-  if (!box || !LATEST_VIDEO?.url || !LATEST_VIDEO?.date) return;
+  if (!box || !videoData?.url || !videoData?.date) return;
 
   const today = new Date();
-  const videoDate = new Date(`${LATEST_VIDEO.date}T00:00:00`);
+  const videoDate = new Date(`${videoData.date}T00:00:00`);
   if (Number.isNaN(videoDate.getTime())) return;
 
   const diffDays = Math.floor((today - videoDate) / (1000 * 60 * 60 * 24));
-  const showFor = Number(LATEST_VIDEO.showForDays ?? 3);
+  const showFor = Number(videoData.showForDays ?? 14);
   if (diffDays < 0 || diffDays > showFor) return;
 
   box.innerHTML = `
@@ -206,10 +244,10 @@ function setupVideoPing() {
       <div class="pulse">${tr("new_video")}</div>
       <div class="tiny">${diffDays} ${tr("days_ago")}</div>
     </div>
-    <p class="video-title">${escapeHtml(LATEST_VIDEO.title)}</p>
+    <p class="video-title">${escapeHtml(videoData.title)}</p>
     <div class="video-actions">
-      <a class="btn primary" href="${LATEST_VIDEO.url}" target="_blank" rel="noreferrer">${tr("watch_now")}</a>
-      <a class="btn" href="https://www.youtube.com/channel/UCjXdbreXXKrvXyU1SvKOJqw" target="_blank" rel="noreferrer">${tr("channel")}</a>
+      <a class="btn primary" href="${videoData.url}" target="_blank" rel="noreferrer">${tr("watch_now")}</a>
+      <a class="btn" href="https://www.youtube.com/channel/${VIDEO_CHANNEL_ID}" target="_blank" rel="noreferrer">${tr("channel")}</a>
     </div>
   `;
   box.hidden = false;
@@ -243,7 +281,7 @@ function render(apps) {
     const isFav = state.favorites.has(a.id);
     const el = document.createElement("article");
     el.className = "card";
-    el.dataset.zip = a.zip || "";
+    el.dataset.appId = a.id || "";
 
     const badge = a.badge ? `<div class="badge">${escapeHtml(a.badge)}</div>` : "";
     const tags = (a.tags || []).map((t) => `<span class="tag">${escapeHtml(t)}</span>`).join("");
@@ -254,8 +292,6 @@ function render(apps) {
 
     el.innerHTML = `
       ${badge}
-      <button class="icon-btn favorite-btn ${isFav ? "active" : ""}" data-action="favorite" data-id="${escapeHtml(a.id)}" aria-label="favorite">★</button>
-      <button class="icon-btn share-btn" data-action="share" data-id="${escapeHtml(a.id)}" aria-label="share">↗</button>
       <div class="thumb">${thumb}</div>
       <div class="content">
         <h3 title="${escapeHtml(a.title)}">${escapeHtml(a.title)}${a.new ? '<span class="new-mini">NEW</span>' : ""}</h3>
@@ -263,11 +299,7 @@ function render(apps) {
         <div class="tags">${tags}</div>
         ${req ? `<p class="meta">${req}</p>` : ""}
         <div class="meta-row tiny">${(a.date || "").replaceAll("-", "/")} · ${Number(a.downloads || 0).toLocaleString(state.lang === "it" ? "it-IT" : "en-US")}</div>
-        <div class="btns">
-          ${a.zip ? `<a class="btn primary" href="${escapeHtml(a.zip)}" target="_blank" rel="noreferrer">${tr("download_zip")}</a>` : ""}
-          ${a.demo ? `<a class="btn" href="${escapeHtml(a.demo)}" target="_blank" rel="noreferrer">${tr("demo")}</a>` : ""}
-          <button class="btn copy-btn" data-action="copy" data-id="${escapeHtml(a.id)}">${tr("copy_link")}</button>
-        </div>
+        <p class="tiny card-cta">${tr("tap_to_open")}</p>
       </div>
     `;
 
@@ -382,49 +414,15 @@ function appUrlForId(id) {
   return `${window.location.origin}${window.location.pathname}#app=${encodeURIComponent(id)}`;
 }
 
-function setupCardActions(apps, refresh) {
-  document.addEventListener("click", async (e) => {
-    const actionBtn = e.target.closest("[data-action]");
-    if (actionBtn) {
-      e.preventDefault();
-      e.stopPropagation();
-      const action = actionBtn.dataset.action;
-      const id = actionBtn.dataset.id;
-      const app = apps.find((a) => a.id === id);
-      if (!app) return;
-
-      if (action === "favorite") {
-        if (state.favorites.has(id)) state.favorites.delete(id);
-        else state.favorites.add(id);
-        saveFavorites();
-        updateStats(apps);
-        refresh();
-        return;
-      }
-
-      const url = appUrlForId(id);
-      if (action === "copy" || action === "share") {
-        try {
-          if (navigator.share && action === "share") {
-            await navigator.share({ title: app.title, url });
-          } else {
-            await navigator.clipboard.writeText(url);
-            showToast(tr("copied"));
-          }
-        } catch {
-          // No-op: user cancelled share dialog or clipboard blocked
-        }
-      }
-      return;
-    }
-
+function setupCardActions(apps) {
+  document.addEventListener("click", (e) => {
     if (e.target.closest("a")) return;
     const card = e.target.closest(".card");
     if (!card) return;
 
-    const zip = card.dataset.zip;
-    if (!zip) return;
-    window.open(new URL(zip, window.location.href).href, "_blank", "noopener");
+    const id = card.dataset.appId;
+    if (!id) return;
+    window.location.href = `app.html?id=${encodeURIComponent(id)}`;
   });
 }
 
@@ -439,7 +437,19 @@ function focusHashApp(apps) {
   q.value = app.title;
 }
 
-function init() {
+function setupQolButtons(applyFilters) {
+  const clearBtn = document.getElementById("clearFilters");
+  if (!clearBtn) return;
+  clearBtn.addEventListener("click", () => {
+    document.getElementById("q").value = "";
+    document.getElementById("featuredOnly").checked = false;
+    document.getElementById("favoritesOnly").checked = false;
+    resetQuickFilters();
+    applyFilters();
+  });
+}
+
+async function init() {
   if (typeof APPS === "undefined") {
     console.error("APPS is undefined: check apps/apps.js import path.");
     return;
@@ -447,9 +457,11 @@ function init() {
 
   state.totalApps = APPS.length;
   const filters = setupFilters(APPS);
+  const latestVideo = await fetchLatestVideo();
+
   const refresh = () => {
     applyI18nText();
-    setupVideoPing();
+    setupVideoPing(latestVideo);
     filters.buildTagOptions();
     filters.apply();
     updateStats(APPS);
@@ -457,7 +469,8 @@ function init() {
   };
 
   setupLanguage(refresh);
-  setupCardActions(APPS, filters.apply);
+  setupQolButtons(filters.apply);
+  setupCardActions(APPS);
 
   focusHashApp(APPS);
   refresh();
