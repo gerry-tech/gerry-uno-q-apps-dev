@@ -985,3 +985,70 @@ button.btn:hover{ transform: translateY(-1px); }
   .controls-top{ flex-direction:column; }
   .controls-grid{ grid-template-columns: 1fr; }
 }
+
+/* v1.3.3 control styling refresh */
+.controls-panel{
+  box-shadow: 0 0 0 1px rgba(0,255,136,0.2), 0 20px 35px rgba(0,0,0,0.35), inset 0 0 34px rgba(0,255,136,0.06);
+}
+
+.controls-top #q,
+.controls-grid select,
+.controls-grid .featured-filter{
+  border: 1px solid rgba(102,255,179,0.45);
+  background: linear-gradient(180deg, rgba(2,30,16,0.92), rgba(2,22,12,0.9));
+  color: #ccffe7;
+  box-shadow: inset 0 0 0 1px rgba(0,255,136,0.08), 0 8px 18px rgba(0,0,0,0.28);
+}
+
+.controls-grid select,
+.controls-top #q{
+  border-radius: 14px;
+  min-height: 44px;
+  padding: 11px 12px;
+}
+
+.controls-top #q::placeholder{ color: rgba(195,255,226,0.65); }
+
+.controls-grid select{
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #79ffc0 50%),
+    linear-gradient(135deg, #79ffc0 50%, transparent 50%),
+    linear-gradient(180deg, rgba(2,30,16,0.95), rgba(2,22,12,0.92));
+  background-position:
+    calc(100% - 18px) calc(50% - 3px),
+    calc(100% - 12px) calc(50% - 3px),
+    0 0;
+  background-size: 6px 6px, 6px 6px, 100% 100%;
+  background-repeat: no-repeat;
+  padding-right: 34px;
+}
+
+.controls-top #q:focus,
+.controls-grid select:focus,
+.controls-grid .featured-filter:focus-within{
+  outline: none;
+  border-color: rgba(0,255,136,0.95);
+  box-shadow: 0 0 0 3px rgba(0,255,136,0.2), 0 0 26px rgba(0,255,136,0.25);
+}
+
+.controls-grid .featured-filter{
+  border-radius: 14px;
+  justify-content: center;
+  min-height: 44px;
+}
+
+.controls-grid .featured-filter span{ color: #baffdf; font-weight: 700; }
+
+.controls-grid .featured-filter input{ accent-color: #00ff88; }
+
+#clearFilters.btn.ghost{
+  border-color: rgba(0,255,136,0.65);
+  color: #c6ffe3;
+  background: linear-gradient(180deg, rgba(0,255,136,0.16), rgba(0,255,136,0.08));
+  box-shadow: 0 10px 20px rgba(0,0,0,0.28);
+}
+
+#clearFilters.btn.ghost:hover{
+  box-shadow: 0 0 24px rgba(0,255,136,0.3), 0 10px 20px rgba(0,0,0,0.24);
+}

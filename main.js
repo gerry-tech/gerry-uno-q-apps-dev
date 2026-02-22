@@ -200,6 +200,53 @@ function applyI18nText() {
 }
 
 async function fetchLatestVideo() {
+  const uploadsPlaylist = `UU${VIDEO_CHANNEL_ID.slice(2)}`;
+
+  async function pickLatestLongVideoFromApi() {
+    const listUrl = `https://yt.lemnoslife.com/noKey/playlistItems?part=snippet&playlistId=${uploadsPlaylist}&maxResults=10`;
+    const listRes = await fetch(listUrl, { cache: "no-store" });
+    if (!listRes.ok) throw new Error("playlist fetch failed");
+    const listData = await listRes.json();
+    const items = (listData?.items || []).map((it) => ({
+      title: it?.snippet?.title || "",
+      videoId: it?.snippet?.resourceId?.videoId || "",
+      publishedRaw: it?.snippet?.publishedAt || ""
+    })).filter((v) => v.title && v.videoId && v.publishedRaw);
+
+    if (!items.length) throw new Error("no upload entries");
+
+    for (const item of items) {
+      const videoRes = await fetch(`https://yt.lemnoslife.com/noKey/videos?part=contentDetails,snippet&id=${item.videoId}`, { cache: "no-store" });
+      if (!videoRes.ok) continue;
+      const videoData = await videoRes.json();
+      const iso = videoData?.items?.[0]?.contentDetails?.duration || "";
+      const match = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+      const durationSeconds = match ? (Number(match[1] || 0) * 3600) + (Number(match[2] || 0) * 60) + Number(match[3] || 0) : 0;
+      if (durationSeconds >= 180) {
+        return {
+          title: item.title,
+          url: `https://www.youtube.com/watch?v=${item.videoId}`,
+          date: item.publishedRaw.slice(0, 10),
+          showForDays: 14
+        };
+      }
+    }
+
+    const newest = items[0];
+    return {
+      title: newest.title,
+      url: `https://www.youtube.com/watch?v=${newest.videoId}`,
+      date: newest.publishedRaw.slice(0, 10),
+      showForDays: 14
+    };
+  }
+
+  try {
+    return await pickLatestLongVideoFromApi();
+  } catch {
+    // fallback to RSS-based proxies
+  }
+
   const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${VIDEO_CHANNEL_ID}`;
   const sources = [
     `https://api.allorigins.win/raw?url=${encodeURIComponent(feedUrl)}`,
