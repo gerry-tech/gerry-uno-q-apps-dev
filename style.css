@@ -31,10 +31,10 @@ body{
   line-height: 1.4;
 
   background:
-    radial-gradient(1200px 640px at 10% 0%, rgba(0,255,136,0.25), transparent 62%),
-    radial-gradient(1100px 600px at 92% 10%, rgba(0,212,122,0.2), transparent 60%),
-    radial-gradient(1400px 820px at 55% 120%, rgba(0,130,70,0.24), transparent 70%),
-    linear-gradient(180deg, #021208 0%, #03180c 45%, #041f10 100%);
+    radial-gradient(1400px 700px at 8% -10%, rgba(0,255,136,0.22), transparent 68%),
+    radial-gradient(1200px 700px at 92% 8%, rgba(0,212,122,0.18), transparent 70%),
+    radial-gradient(1600px 900px at 50% 120%, rgba(0,120,70,0.18), transparent 75%),
+    linear-gradient(180deg, #03150b 0%, #03170d 35%, #03170d 68%, #03160c 100%);
 
   background-color: var(--bg);
 
@@ -1051,4 +1051,46 @@ button.btn:hover{ transform: translateY(-1px); }
 
 #clearFilters.btn.ghost:hover{
   box-shadow: 0 0 24px rgba(0,255,136,0.3), 0 10px 20px rgba(0,0,0,0.24);
+}
+
+
+/* v1.3.4 dropdown readability + smoother background */
+.controls-grid select,
+.controls select{
+  color: rgba(255,255,255,0.92);
+  text-shadow: 0 0 12px rgba(0,255,136,0.18);
+}
+
+.controls-grid select option,
+.controls select option,
+select option{
+  background: #041b10;
+  color: rgba(255,255,255,0.92);
+}
+
+.controls-grid select option:checked,
+.controls select option:checked{
+  background: linear-gradient(90deg, #00b765, #00d47a);
+  color: #052113;
+}
+
+body::before{
+  content:"";
+  position: fixed;
+  inset: -10% 0 -10% 0;
+  pointer-events:none;
+  z-index: 0;
+  background:
+    linear-gradient(180deg,
+      rgba(0,255,136,0.05) 0%,
+      rgba(0,255,136,0.02) 35%,
+      rgba(0,255,136,0.02) 70%,
+      rgba(0,255,136,0.05) 100%);
+  filter: blur(14px);
+}
+
+/* soften hard horizontal break near middle */
+main.wrap{
+  background: linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.02));
+  border-radius: 16px;
 }
