@@ -1094,3 +1094,19 @@ main.wrap{
   background: linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.02));
   border-radius: 16px;
 }
+
+/* v1.3.5 selected filter style (v1.2 inspired blue/purple) */
+.controls-grid select[data-selected="true"]{
+  color: rgba(255,255,255,0.96) !important;
+  border-color: rgba(124,92,255,0.75) !important;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #c9beff 50%),
+    linear-gradient(135deg, #c9beff 50%, transparent 50%),
+    linear-gradient(90deg, rgba(124,92,255,0.45), rgba(51,214,255,0.35)) !important;
+  box-shadow: 0 0 0 1px rgba(124,92,255,0.35), 0 0 20px rgba(124,92,255,0.25) !important;
+}
+
+.controls-grid select[data-selected="true"] option:checked{
+  background: linear-gradient(90deg, #7c5cff, #33d6ff);
+  color: #081022;
+}

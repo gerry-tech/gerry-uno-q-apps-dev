@@ -199,12 +199,23 @@ function applyI18nText() {
   itBtn.classList.toggle("active", state.lang === "it");
 }
 
+
+async function fetchWithTimeout(url, timeoutMs = 2600) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { cache: "no-store", signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 async function fetchLatestVideo() {
   const uploadsPlaylist = `UU${VIDEO_CHANNEL_ID.slice(2)}`;
 
   async function pickLatestLongVideoFromApi() {
     const listUrl = `https://yt.lemnoslife.com/noKey/playlistItems?part=snippet&playlistId=${uploadsPlaylist}&maxResults=10`;
-    const listRes = await fetch(listUrl, { cache: "no-store" });
+    const listRes = await fetchWithTimeout(listUrl);
     if (!listRes.ok) throw new Error("playlist fetch failed");
     const listData = await listRes.json();
     const items = (listData?.items || []).map((it) => ({
@@ -216,7 +227,7 @@ async function fetchLatestVideo() {
     if (!items.length) throw new Error("no upload entries");
 
     for (const item of items) {
-      const videoRes = await fetch(`https://yt.lemnoslife.com/noKey/videos?part=contentDetails,snippet&id=${item.videoId}`, { cache: "no-store" });
+      const videoRes = await fetchWithTimeout(`https://yt.lemnoslife.com/noKey/videos?part=contentDetails,snippet&id=${item.videoId}`);
       if (!videoRes.ok) continue;
       const videoData = await videoRes.json();
       const iso = videoData?.items?.[0]?.contentDetails?.duration || "";
@@ -255,7 +266,7 @@ async function fetchLatestVideo() {
 
   for (const url of sources) {
     try {
-      const response = await fetch(url, { cache: "no-store" });
+      const response = await fetchWithTimeout(url);
       if (!response.ok) continue;
       const xml = await response.text();
       const parsed = new DOMParser().parseFromString(xml, "text/xml");
@@ -426,6 +437,13 @@ function setupFilters(allApps) {
     tag.value = current;
   }
 
+  function updateSelectState() {
+    [tag, level, sort].forEach((select) => {
+      const hasValue = Boolean(select.value);
+      select.dataset.selected = hasValue ? "true" : "false";
+    });
+  }
+
   function apply() {
     const query = q.value.trim().toLowerCase();
     const t = tag.value;
@@ -441,10 +459,12 @@ function setupFilters(allApps) {
       return okQ && okT && okL && okF && okFav;
     });
 
+    updateSelectState();
     render(sortApps(filtered, sort.value));
   }
 
   buildTagOptions();
+  updateSelectState();
   [q, tag, level, sort, featuredOnly, favoritesOnly].forEach((node) => {
     node.addEventListener(node === q ? "input" : "change", apply);
   });
@@ -539,7 +559,7 @@ function setupQolButtons(applyFilters) {
   });
 }
 
-async function init() {
+function init() {
   if (typeof APPS === "undefined") {
     console.error("APPS is undefined: check apps/apps.js import path.");
     return;
@@ -547,11 +567,11 @@ async function init() {
 
   state.totalApps = APPS.length;
   const filters = setupFilters(APPS);
-  const latestVideo = await fetchLatestVideo();
+  let currentVideoData = LATEST_VIDEO_FALLBACK;
 
   const refresh = () => {
     applyI18nText();
-    setupVideoPing(latestVideo);
+    setupVideoPing(currentVideoData);
     filters.buildTagOptions();
     filters.apply();
     updateStats(APPS);
@@ -564,6 +584,15 @@ async function init() {
 
   focusHashApp(APPS);
   refresh();
+
+  fetchLatestVideo().then((videoData) => {
+    if (videoData?.url) {
+      currentVideoData = videoData;
+      setupVideoPing(currentVideoData);
+    }
+  }).catch(() => {
+    // keep fallback video data
+  });
 }
 
 init();
