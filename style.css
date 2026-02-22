@@ -1110,3 +1110,33 @@ main.wrap{
   background: linear-gradient(90deg, #7c5cff, #33d6ff);
   color: #081022;
 }
+
+/* v1.3.6 remove native white option highlight */
+select option,
+.controls select option,
+.controls-grid select option{
+  background-color: #041b10 !important;
+  color: rgba(230,255,243,0.96) !important;
+}
+
+select option:hover,
+select option:focus,
+select option:active,
+.controls select option:hover,
+.controls select option:focus,
+.controls select option:active,
+.controls-grid select option:hover,
+.controls-grid select option:focus,
+.controls-grid select option:active{
+  background: linear-gradient(90deg, rgba(124,92,255,0.9), rgba(51,214,255,0.85)) !important;
+  background-color: #4b63d8 !important;
+  color: #081022 !important;
+}
+
+select option:checked,
+.controls select option:checked,
+.controls-grid select option:checked{
+  background: linear-gradient(90deg, #7c5cff, #33d6ff) !important;
+  background-color: #5d6fff !important;
+  color: #081022 !important;
+}
